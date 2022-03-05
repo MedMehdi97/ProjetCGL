@@ -34,6 +34,12 @@ public class TypeServiceImp implements TypeService {
     }
 
     @Override
+    public Type getTypeByLib(String lib) {
+        return typeRepository.findByLibType(lib).orElseThrow(() ->
+                new ResourceNotFoundException("Type", "LibType", lib));
+    }
+
+    @Override
     public Type updateType(Type type, long id) {
         Type existingType=getTypeById(id);
         existingType.setLibType(type.getLibType());

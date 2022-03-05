@@ -9,6 +9,7 @@ public interface TypeService {
     Type saveType(Type type);
     Type getTypeById(long id);
     List<Type> getAllType();
+    Type getTypeByLib(String lib);
     Type updateType(Type type, long id);
     void deleteType(long id);
 

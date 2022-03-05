@@ -19,8 +19,7 @@ public class Type {
     @NonNull
     private String libType;
 
-    public Type(long idType, @NonNull String libType) {
-        this.idType = idType;
+    public Type(@NonNull String libType) {
         this.libType = libType;
     }
 }
