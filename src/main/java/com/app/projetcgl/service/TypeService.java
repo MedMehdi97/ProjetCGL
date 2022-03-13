@@ -4,7 +4,9 @@ import com.app.projetcgl.model.Type;
 
 import java.util.List;
 
-
+/**
+ * Interface TypeService
+ */
 public interface TypeService {
     Type saveType(Type type);
     Type getTypeById(long id);

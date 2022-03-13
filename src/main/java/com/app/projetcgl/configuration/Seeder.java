@@ -19,7 +19,6 @@ public class Seeder {
     @Bean
     public CommandLineRunner seedingType(TypeService typeService){
         return args -> {
-            List<Type> listType=typeService.getAllType();
 
             ArrayList<String> listLibType=new ArrayList<>();
             listLibType.add("texte"); listLibType.add("audio");
