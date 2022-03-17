@@ -64,7 +64,7 @@ public class DocumentController {
      */
     @PostMapping("Document")
     public ResponseEntity<Document> saveDocument(@RequestParam("nomDocument") String nomDocument, @RequestParam("lien") String lien , @RequestParam("typeDocument") String typeLib){
-        return new ResponseEntity<Document>(documentService.saveDocument(new Document(lien,nomDocument,typeService.getTypeByLib(typeLib))), HttpStatus.CREATED);
+        return new ResponseEntity<Document>(documentService.saveDocument(new Document(nomDocument, lien,typeService.getTypeByLib(typeLib))), HttpStatus.CREATED);
     }
 
     /**
