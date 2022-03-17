@@ -1,5 +1,7 @@
 package com.app.projetcgl.controller;
+import com.app.projetcgl.model.DateType;
 import com.app.projetcgl.model.Document;
+import com.app.projetcgl.model.Type;
 import com.app.projetcgl.service.DocumentService;
 import com.app.projetcgl.service.TypeService;
 import org.springframework.data.domain.Page;
@@ -7,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.SqlResultSetMapping;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -82,9 +85,28 @@ public class DocumentController {
      * Nombre d'archivage par date
      * @return
      */
-    @GetMapping("Statistiques")
+    @GetMapping("Statistiques/date")
     public ResponseEntity<HashMap<LocalDate,Integer>> getStatistiques(){
         return new ResponseEntity<HashMap<LocalDate,Integer>>(documentService.statistiqueArchivage(),HttpStatus.OK);
     }
+
+    /**
+     * Nombre d'archivage par type
+     * @return
+     */
+    @GetMapping("Statistiques/type")
+    public ResponseEntity<HashMap<Type,Integer>> getStatistiquesByType(){
+        return new ResponseEntity<HashMap<Type,Integer>>(documentService.statistiqueArchivageByType(),HttpStatus.OK);
+    }
+
+    /**
+     * Nombre d'archivage par date et type
+     * @return
+     */
+    @GetMapping("Statistiques/all")
+    public ResponseEntity<HashMap<DateType,Integer>> getStatistiquesByDateAndType(){
+        return new ResponseEntity<HashMap<DateType,Integer>>(documentService.statistiqueArchivageByDateAndType(),HttpStatus.OK);
+    }
+
 
 }

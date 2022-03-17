@@ -1,7 +1,9 @@
 package com.app.projetcgl.service.imp;
 
 import com.app.projetcgl.exception.ResourceNotFoundException;
+import com.app.projetcgl.model.DateType;
 import com.app.projetcgl.model.Document;
+import com.app.projetcgl.model.Type;
 import com.app.projetcgl.repository.DocumentPagingRepository;
 import com.app.projetcgl.repository.DocumentRepository;
 import com.app.projetcgl.service.DocumentService;
@@ -10,7 +12,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.SqlResultSetMapping;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -119,4 +123,48 @@ public class DocumentServiceImp implements DocumentService {
 
         return documentPagingRepository.findAll(page);
     }
+
+    /**
+     * Statisques Archivage par type
+     * @return
+     */
+    @Override
+    public HashMap<Type, Integer> statistiqueArchivageByType() {
+        Map<Type,Integer> statistique=new HashMap<>();
+        List<Type> listType=documentRepository.findDistinctType();
+        for (int i=0; i<listType.size();i++){
+            statistique.put(listType.get(i),documentRepository.countDocumentsByType(listType.get(i)));
+        }
+        return (HashMap<Type, Integer>) statistique;
+    }
+
+    /**
+     * Statistique d'archivage par date et type
+     * @return
+     */
+    @Override
+    public HashMap<DateType, Integer> statistiqueArchivageByDateAndType() {
+        HashMap<DateType,Integer> resultStat=new HashMap<>();
+        List<DateType> listDateType=getDistinctDateType();
+        for (int i=0; i<listDateType.size();i++){
+                resultStat.put(listDateType.get(i),documentRepository.countDocumentsByDateArchivageAndType(listDateType.get(i).getDateArchivage(),listDateType.get(i).getType()));
+        }
+        return resultStat;
+    }
+
+    /**
+     * Construction de la liste DateType distinct
+     * @return
+     */
+    public List<DateType> getDistinctDateType() {
+        List<Object[]> list=documentRepository.findDistinctDateAndType();
+        List<DateType> result=new ArrayList<>();
+        for (Object [] object : list){
+             result.add(new DateType((LocalDate) object[0], (Type) object[1]));
+        }
+        return result;
+    }
+
+
+
 }

@@ -1,8 +1,11 @@
 package com.app.projetcgl.service;
 
+import com.app.projetcgl.model.DateType;
 import com.app.projetcgl.model.Document;
+import com.app.projetcgl.model.Type;
 import org.springframework.data.domain.Page;
 
+import javax.persistence.SqlResultSetMapping;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -18,4 +21,6 @@ public interface DocumentService {
     void deleteDocument(long id);
     HashMap<LocalDate,Integer> statistiqueArchivage();
     Page<Document> getAllDocumentByPage(int nbPage, int nbElm);
+    HashMap<Type, Integer> statistiqueArchivageByType();
+    HashMap<DateType,Integer> statistiqueArchivageByDateAndType();
 }
