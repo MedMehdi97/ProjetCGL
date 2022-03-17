@@ -1,17 +1,16 @@
 const listDocs = () => {
     return {
-        formData: {},
+        docs: [],
         formMessage: '',
         async getAll() {
             this.formMessage = '';
             return fetchApi(
                 '/all',
                 'GET',
-                this.formData,
+                '',
                 async (response) => {
                     this.formMessage = 'Documents chargés';
-                    const tab = await response.json();
-                    return tab;
+                    return response.json();
                 },
                 (e) => {
                     this.formMessage = 'Qqch n\'a pas fonctionné ...';
@@ -23,10 +22,10 @@ const listDocs = () => {
             fetchApi(
                 '/Delete/' + id,
                 'DELETE',
-                this.formData,
+                '',
                 (response) => {
-                    this.formData = {};
                     this.formMessage = 'Document supprimé !';
+                    this.docs = this.docs.filter(e => e.idDocument != id);
                 },
                 (e) => {
                     this.formMessage = 'Qqch n\'a pas fonctionné ...';

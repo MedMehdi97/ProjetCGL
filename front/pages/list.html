@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:x-bind="http://www.w3.org/1999/xhtml">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,30 +12,34 @@
   <script src="/scripts/api.js"></script>
   <script src="/scripts/list.js"></script>
 </head>
+
 <body>
   <a href="/">Accueil</a><br>
-
-  <table id="dtBasicExample" class="table table-striped table-bordered table-sm" x-data='listDocs()'>
-    <thead>
-    <tr>
-      <th class="th-sm">ID</th>
-      <th class="th-sm">Nom du document</th>
-      <th class="th-sm">Date d'archivage</th>
-      <th class="th-sm">Télécharger l'archive</th>
-      <th class="th-sm">Supprimer l'archive</th>
-    </tr>
-    </thead>
-    <tbody x-data="{docs: []}" x-init="docs = await getAll()">
-      <template x-for="doc in docs">
+  <div x-data='listDocs()'>
+    <table id="dtBasicExample" class="table table-striped table-bordered table-sm">
+      <thead>
         <tr>
-          <td x-text='doc.idDocument'></td>
-          <td x-text='doc.nom'></td>
-          <td x-text='doc.dateArchivage'></td>
-          <td><a @click="alert(doc.lien)" href="#">Lien</a></td>
-          <td><button type="button" class="btn btn-danger" @click="deleteDoc(doc.idDocument)">Supprimer</button></td>
+          <th class="th-sm">ID</th>
+          <th class="th-sm">Nom du document</th>
+          <th class="th-sm">Date d'archivage</th>
+          <th class="th-sm">Télécharger l'archive</th>
+          <th class="th-sm">Supprimer l'archive</th>
         </tr>
-      </template>
-    </tbody>
-  </table>
+      </thead>
+      <tbody x-data="{docs: []}" x-init="docs = await getAll()">
+        <template x-for="doc in docs">
+          <tr>
+            <td x-text='doc.idDocument'></td>
+            <td x-text='doc.nom'></td>
+            <td x-text='doc.dateArchivage'></td>
+            <td><a @click="alert(doc.lien)" href="#">Lien</a></td>
+            <td><button type="button" class="btn btn-danger" @click="deleteDoc(doc.idDocument)">Supprimer</button></td>
+          </tr>
+        </template>
+      </tbody>
+    </table>
+    <div x-text='formMessage'></div>
+  </div>
 </body>
+
 </html>
