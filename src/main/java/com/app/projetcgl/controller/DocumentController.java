@@ -2,6 +2,7 @@ package com.app.projetcgl.controller;
 import com.app.projetcgl.model.Document;
 import com.app.projetcgl.service.DocumentService;
 import com.app.projetcgl.service.TypeService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import java.util.List;
 /**
  * Controller Document
  */
+@CrossOrigin
 @RestController
 public class DocumentController {
     /**
@@ -44,15 +46,25 @@ public class DocumentController {
     }
 
     /**
+     * Liste des documents par page
+     * @param page
+     * @param nbElm
+     * @return
+     */
+    @GetMapping("all/page")
+    public ResponseEntity<Page<Document>>  getDocumentsByPage(@RequestParam("numPage") int page, @RequestParam("nbElm") int nbElm){
+        return new ResponseEntity<Page<Document>>(documentService.getAllDocumentByPage(page, nbElm),HttpStatus.OK);
+    }
+
+    /**
      * Ajout d'un document
      * @param lien
-     * @param dateArchivage
      * @param typeLib
      * @return
      */
     @PostMapping("Document")
-    public ResponseEntity<Document> saveDocument(@RequestParam("lien") String lien, @RequestParam("dateArchivage") String dateArchivage, @RequestParam("typeDocument") String typeLib){
-        return new ResponseEntity<Document>(documentService.saveDocument(new Document(lien,LocalDate.parse(dateArchivage),typeService.getTypeByLib(typeLib))), HttpStatus.CREATED);
+    public ResponseEntity<Document> saveDocument(@RequestParam("nomDocument") String nomDocument, @RequestParam("lien") String lien , @RequestParam("typeDocument") String typeLib){
+        return new ResponseEntity<Document>(documentService.saveDocument(new Document(lien,nomDocument,typeService.getTypeByLib(typeLib))), HttpStatus.CREATED);
     }
 
     /**

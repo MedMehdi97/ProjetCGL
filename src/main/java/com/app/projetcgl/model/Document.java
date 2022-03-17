@@ -6,7 +6,7 @@ import lombok.NonNull;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
+
 
 @Data
 @NoArgsConstructor
@@ -22,12 +22,21 @@ public class Document {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idDocument;
+
+    /**
+     * Nom du document
+     */
+    @Column(name = "nom", nullable = false)
+    @NonNull
+    private String nom;
+
     /**
      * Lien du document
      */
     @Column(name = "lien", nullable = false)
     @NonNull
     private String lien;
+
     /**
      * Date Archivage
      */
@@ -43,16 +52,17 @@ public class Document {
     @NonNull
     private Type type;
 
+
     /**
      * Constructeur initialisant un Document
+     * @param nom
      * @param lien
-     * @param dateArchivage
      * @param type
      */
-    public Document(@NonNull String lien, @NonNull LocalDate dateArchivage, @NonNull Type type) {
-        this.idDocument = idDocument;
+    public Document(@NonNull String nom, @NonNull String lien, @NonNull Type type) {
+        this.nom = nom;
         this.lien = lien;
-        this.dateArchivage = dateArchivage;
+        this.dateArchivage=LocalDate.now();
         this.type = type;
     }
 }

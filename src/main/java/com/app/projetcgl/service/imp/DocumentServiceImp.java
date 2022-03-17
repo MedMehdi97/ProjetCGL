@@ -2,11 +2,14 @@ package com.app.projetcgl.service.imp;
 
 import com.app.projetcgl.exception.ResourceNotFoundException;
 import com.app.projetcgl.model.Document;
+import com.app.projetcgl.repository.DocumentPagingRepository;
 import com.app.projetcgl.repository.DocumentRepository;
 import com.app.projetcgl.service.DocumentService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.print.Doc;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -21,14 +24,17 @@ public class DocumentServiceImp implements DocumentService {
      * Document Repository
      */
     private DocumentRepository documentRepository;
+    private DocumentPagingRepository documentPagingRepository;
+
 
     /**
      * Constructeur initialisant le documentRepository
      * @param documentRepository
+     * @param documentPagingRepository
      */
-    public DocumentServiceImp(DocumentRepository documentRepository) {
-        super();
+    public DocumentServiceImp(DocumentRepository documentRepository, DocumentPagingRepository documentPagingRepository) {
         this.documentRepository = documentRepository;
+        this.documentPagingRepository = documentPagingRepository;
     }
 
     /**
@@ -99,5 +105,18 @@ public class DocumentServiceImp implements DocumentService {
             statistique.put(listDate.get(i),documentRepository.countDocumentsByDateArchivage(listDate.get(i)));
         }
         return (HashMap<LocalDate, Integer>) statistique;
+    }
+
+    /**
+     * Recupration de la liste de document dans une page
+     * @param nbPage
+     * @param nbElm
+     * @return
+     */
+    @Override
+    public Page<Document> getAllDocumentByPage(int nbPage, int nbElm) {
+        Pageable page= PageRequest.of(nbPage, nbElm);
+
+        return documentPagingRepository.findAll(page);
     }
 }
