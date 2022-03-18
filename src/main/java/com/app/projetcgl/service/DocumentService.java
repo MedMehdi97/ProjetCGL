@@ -1,13 +1,8 @@
 package com.app.projetcgl.service;
 
-import com.app.projetcgl.model.DateType;
-import com.app.projetcgl.model.Document;
-import com.app.projetcgl.model.Type;
+import com.app.projetcgl.model.*;
 import org.springframework.data.domain.Page;
 
-import javax.persistence.SqlResultSetMapping;
-import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -19,8 +14,9 @@ public interface DocumentService {
     List<Document> getAllDocument();
     Document updateDocument(Document document, long id);
     void deleteDocument(long id);
-    HashMap<LocalDate,Integer> statistiqueArchivage();
+    List<StatDate> statistiqueArchivageBydate();
     Page<Document> getAllDocumentByPage(int nbPage, int nbElm);
-    HashMap<Type, Integer> statistiqueArchivageByType();
-    HashMap<DateType,Integer> statistiqueArchivageByDateAndType();
+    List<StatType> statistiqueArchivageByType();
+    List<StatDateType> statistiqueArchivageByDateAndType();
+    List<Document> getDocumentsStartingWith(String lib);
 }

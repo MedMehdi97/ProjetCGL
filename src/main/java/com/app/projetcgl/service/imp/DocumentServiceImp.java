@@ -1,9 +1,7 @@
 package com.app.projetcgl.service.imp;
 
 import com.app.projetcgl.exception.ResourceNotFoundException;
-import com.app.projetcgl.model.DateType;
-import com.app.projetcgl.model.Document;
-import com.app.projetcgl.model.Type;
+import com.app.projetcgl.model.*;
 import com.app.projetcgl.repository.DocumentPagingRepository;
 import com.app.projetcgl.repository.DocumentRepository;
 import com.app.projetcgl.service.DocumentService;
@@ -12,12 +10,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.SqlResultSetMapping;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Classe DocumentServiceImp
@@ -102,13 +98,13 @@ public class DocumentServiceImp implements DocumentService {
      * @return
      */
     @Override
-    public HashMap<LocalDate, Integer> statistiqueArchivage() {
-        Map<LocalDate,Integer> statistique=new HashMap<>();
+    public List<StatDate> statistiqueArchivageBydate() {
+        List<StatDate> statistique=new ArrayList<>();
         List<LocalDate> listDate=documentRepository.findDistinctDateArchivage();
         for (int i=0; i<listDate.size();i++){
-            statistique.put(listDate.get(i),documentRepository.countDocumentsByDateArchivage(listDate.get(i)));
+            statistique.add(new StatDate(listDate.get(i),documentRepository.countDocumentsByDateArchivage(listDate.get(i))));
         }
-        return (HashMap<LocalDate, Integer>) statistique;
+        return statistique;
     }
 
     /**
@@ -129,13 +125,13 @@ public class DocumentServiceImp implements DocumentService {
      * @return
      */
     @Override
-    public HashMap<Type, Integer> statistiqueArchivageByType() {
-        Map<Type,Integer> statistique=new HashMap<>();
+    public List<StatType> statistiqueArchivageByType() {
+        List<StatType> statistique=new ArrayList<>();
         List<Type> listType=documentRepository.findDistinctType();
         for (int i=0; i<listType.size();i++){
-            statistique.put(listType.get(i),documentRepository.countDocumentsByType(listType.get(i)));
+            statistique.add(new StatType(listType.get(i).getLibType(),documentRepository.countDocumentsByType(listType.get(i))));
         }
-        return (HashMap<Type, Integer>) statistique;
+        return statistique;
     }
 
     /**
@@ -143,13 +139,25 @@ public class DocumentServiceImp implements DocumentService {
      * @return
      */
     @Override
-    public HashMap<DateType, Integer> statistiqueArchivageByDateAndType() {
-        HashMap<DateType,Integer> resultStat=new HashMap<>();
+    public List<StatDateType> statistiqueArchivageByDateAndType() {
+        List<StatDateType> resultStat=new ArrayList<>();
         List<DateType> listDateType=getDistinctDateType();
         for (int i=0; i<listDateType.size();i++){
-                resultStat.put(listDateType.get(i),documentRepository.countDocumentsByDateArchivageAndType(listDateType.get(i).getDateArchivage(),listDateType.get(i).getType()));
+                Type type=listDateType.get(i).getType();
+                LocalDate date=listDateType.get(i).getDateArchivage();
+                resultStat.add(new StatDateType(date,type.getLibType(),documentRepository.countDocumentsByDateArchivageAndType(date,type)));
         }
         return resultStat;
+    }
+
+    /**
+     * Recherche d'un document par nom
+     * @param lib
+     * @return
+     */
+    @Override
+    public List<Document> getDocumentsStartingWith(String lib) {
+        return documentRepository.findDocumentByNomStartingWith(lib);
     }
 
     /**

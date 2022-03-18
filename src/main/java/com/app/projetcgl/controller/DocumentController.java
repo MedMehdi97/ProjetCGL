@@ -1,7 +1,5 @@
 package com.app.projetcgl.controller;
-import com.app.projetcgl.model.DateType;
-import com.app.projetcgl.model.Document;
-import com.app.projetcgl.model.Type;
+import com.app.projetcgl.model.*;
 import com.app.projetcgl.service.DocumentService;
 import com.app.projetcgl.service.TypeService;
 import org.springframework.data.domain.Page;
@@ -9,9 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.SqlResultSetMapping;
-import java.time.LocalDate;
-import java.util.HashMap;
+
 import java.util.List;
 
 /**
@@ -86,8 +82,8 @@ public class DocumentController {
      * @return
      */
     @GetMapping("Statistiques/date")
-    public ResponseEntity<HashMap<LocalDate,Integer>> getStatistiques(){
-        return new ResponseEntity<HashMap<LocalDate,Integer>>(documentService.statistiqueArchivage(),HttpStatus.OK);
+    public ResponseEntity<List<StatDate>> getStatistiquesByDate(){
+        return new ResponseEntity<List<StatDate>>(documentService.statistiqueArchivageBydate(),HttpStatus.OK);
     }
 
     /**
@@ -95,8 +91,8 @@ public class DocumentController {
      * @return
      */
     @GetMapping("Statistiques/type")
-    public ResponseEntity<HashMap<Type,Integer>> getStatistiquesByType(){
-        return new ResponseEntity<HashMap<Type,Integer>>(documentService.statistiqueArchivageByType(),HttpStatus.OK);
+    public ResponseEntity<List<StatType>> getStatistiquesByType(){
+        return new ResponseEntity<List<StatType>>(documentService.statistiqueArchivageByType(),HttpStatus.OK);
     }
 
     /**
@@ -104,8 +100,18 @@ public class DocumentController {
      * @return
      */
     @GetMapping("Statistiques/all")
-    public ResponseEntity<HashMap<DateType,Integer>> getStatistiquesByDateAndType(){
-        return new ResponseEntity<HashMap<DateType,Integer>>(documentService.statistiqueArchivageByDateAndType(),HttpStatus.OK);
+    public ResponseEntity<List<StatDateType>> getStatistiquesByDateAndType(){
+        return new ResponseEntity<List<StatDateType>>(documentService.statistiqueArchivageByDateAndType(),HttpStatus.OK);
+    }
+
+    /**
+     * Recherche document par nom
+     * @param nom
+     * @return
+     */
+    @GetMapping("Document/Recherche")
+    public ResponseEntity<List<Document>> getDocumentsStartingWith(@RequestParam("Nom Document") String nom){
+        return new ResponseEntity<List<Document>>(documentService.getDocumentsStartingWith(nom),HttpStatus.OK);
     }
 
 

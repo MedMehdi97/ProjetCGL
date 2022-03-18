@@ -57,4 +57,11 @@ public interface DocumentRepository extends JpaRepository<Document,Long> {
      * @return
      */
     int countDocumentsByDateArchivageAndType(LocalDate dateArchivage, Type type);
+
+    /**
+     * Recherche document par nom
+     * @param starting
+     * @return
+     */
+    List<Document> findDocumentByNomStartingWith(String starting);
 }
