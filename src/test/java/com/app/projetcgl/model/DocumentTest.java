@@ -73,7 +73,6 @@ class DocumentTest {
         Document doc1 = new Document("Test1", "Lien1", new Type("text"));
         Document doc2 = new Document("Test1", "Lien1", new Type("text"));
 
-
         assertThat(doc1).hasSameHashCodeAs(doc2);
     }
 
