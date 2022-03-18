@@ -114,5 +114,10 @@ public class DocumentController {
         return new ResponseEntity<List<Document>>(documentService.getDocumentsStartingWith(nom),HttpStatus.OK);
     }
 
+    @GetMapping("Document/Recherche/Page")
+    public ResponseEntity<List<Document>> getDocumentsStartingWithByPage(@RequestParam("Nom Document") String nom, @RequestParam("Numéro Page") int numPage, @RequestParam("Nombre élement") int nbElm){
+        return new ResponseEntity<List<Document>>(documentService.getDocumentsStartingWithByPage(nom,numPage,nbElm),HttpStatus.OK);
+    }
+
 
 }

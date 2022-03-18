@@ -160,6 +160,13 @@ public class DocumentServiceImp implements DocumentService {
         return documentRepository.findDocumentByNomStartingWith(lib);
     }
 
+    @Override
+    public List<Document> getDocumentsStartingWithByPage(String lib, int numPage, int nbElm) {
+        Pageable page= PageRequest.of(numPage, nbElm);
+        return documentPagingRepository.findAllByNomStartingWith(lib,page);
+    }
+
+
     /**
      * Construction de la liste DateType distinct
      * @return

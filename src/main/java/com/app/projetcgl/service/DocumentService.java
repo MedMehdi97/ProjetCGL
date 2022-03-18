@@ -19,4 +19,5 @@ public interface DocumentService {
     List<StatType> statistiqueArchivageByType();
     List<StatDateType> statistiqueArchivageByDateAndType();
     List<Document> getDocumentsStartingWith(String lib);
+    List<Document> getDocumentsStartingWithByPage(String lib, int numPage, int nbElm);
 }
