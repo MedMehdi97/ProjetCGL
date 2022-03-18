@@ -65,4 +65,17 @@ public class Document {
         this.dateArchivage=LocalDate.now();
         this.type = type;
     }
+
+    /**
+     * Constructeur initialisant un Document
+     * @param nom
+     * @param lien
+     * @param type
+     */
+    public Document(@NonNull String nom, @NonNull String lien, @NonNull LocalDate dateArchivage, @NonNull Type type) {
+        this.nom = nom;
+        this.lien = lien;
+        this.dateArchivage = dateArchivage;
+        this.type = type;
+    }
 }

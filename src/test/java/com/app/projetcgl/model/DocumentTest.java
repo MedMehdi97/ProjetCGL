@@ -34,6 +34,22 @@ class DocumentTest {
     }
 
     @Test
+    void should_create_document_with_date() {
+        String nom = "Test";
+        String lien = "LienTest";
+        Type type = new Type("text");
+        LocalDate date = LocalDate.parse("2022-01-01");
+
+        Document doc = new Document(nom, lien, date, type);
+
+        assertThat(doc).isNotNull();
+        assertThat(doc.getNom()).isEqualTo(nom);
+        assertThat(doc.getLien()).isEqualTo(lien);
+        assertThat(doc.getType().getLibType()).isEqualTo(type.getLibType());
+        assertThat(doc.getDateArchivage()).isEqualTo(date);
+    }
+
+    @Test
     void should_test_setters(){
         Document doc = new Document();
         String nom = "Test";

@@ -4,6 +4,7 @@ const path = require('path');
 const router = express.Router();
 
 app.use('/scripts', express.static(__dirname + '/scripts'));
+app.use('/assets', express.static(__dirname + '/assets'));
 
 router.get('/', function (req, res) {
   res.sendFile(path.join(__dirname + '/pages/index.html'));
