@@ -47,7 +47,7 @@ public interface DocumentRepository extends JpaRepository<Document,Long> {
      * Recherche des dateArchivage et type différent
      * @return
      */
-    @Query("SELECT DISTINCT dateArchivage, type from Document ")
+    @Query("SELECT DISTINCT dateArchivage, type from Document")
     List<Object[]> findDistinctDateAndType();
 
     /**

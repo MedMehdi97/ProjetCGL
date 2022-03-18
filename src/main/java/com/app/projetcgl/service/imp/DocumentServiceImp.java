@@ -79,6 +79,7 @@ public class DocumentServiceImp implements DocumentService {
         existingDocument.setLien(document.getLien());
         existingDocument.setDateArchivage(document.getDateArchivage());
         existingDocument.setType(document.getType());
+        existingDocument.setNom(document.getNom());
 
         return existingDocument;
     }
