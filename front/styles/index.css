@@ -1,0 +1,49 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+img {
+  height: 100vh;
+  width: 100%;
+  object-fit: cover;
+  position: absolute;
+  z-index: -1;
+  filter: blur(0.3rem) brightness(0.8) sepia(0.2);
+  scale: 1.02;
+}
+h1 {
+  color: whitesmoke;
+  font-family: Comfortaa;
+  text-align: center;
+  font-size: 4rem !important;
+  text-shadow: black 0.1em 0.1em 0.2em
+}
+.mcontainer {
+  padding: 4rem;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.mlist {
+  display: flex;
+  justify-content: space-around;
+}
+.bi {
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  font-size: 7rem;
+  background-color: rgba(250,248,228,0.5);
+  padding: 4.5rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10rem;
+  color: #311a10;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.bi:hover {
+  background-color: rgba(250,248,228,0.7);
+}

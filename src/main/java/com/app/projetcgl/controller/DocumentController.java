@@ -110,13 +110,13 @@ public class DocumentController {
      * @return
      */
     @GetMapping("Document/Recherche")
-    public ResponseEntity<List<Document>> getDocumentsStartingWith(@RequestParam("Nom Document") String nom){
+    public ResponseEntity<List<Document>> getDocumentsStartingWith(@RequestParam("nom") String nom){
         return new ResponseEntity<List<Document>>(documentService.getDocumentsStartingWith(nom),HttpStatus.OK);
     }
 
     @GetMapping("Document/Recherche/Page")
-    public ResponseEntity<List<Document>> getDocumentsStartingWithByPage(@RequestParam("Nom Document") String nom, @RequestParam("Numéro Page") int numPage, @RequestParam("Nombre élement") int nbElm){
-        return new ResponseEntity<List<Document>>(documentService.getDocumentsStartingWithByPage(nom,numPage,nbElm),HttpStatus.OK);
+    public ResponseEntity<Page<Document>> getDocumentsStartingWithByPage(@RequestParam("nom") String nom, @RequestParam("numPage") int numPage, @RequestParam("nbElm") int nbElm){
+        return new ResponseEntity<Page<Document>>(documentService.getDocumentsStartingWithByPage(nom,numPage,nbElm),HttpStatus.OK);
     }
 
 

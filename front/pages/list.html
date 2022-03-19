@@ -5,40 +5,58 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles/page.css">
+  <link rel="stylesheet" href="/styles/list.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-  <style>
-    th,
-    td {
-      vertical-align: middle;
-      text-align: center;
-    }
-  </style>
   <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="/scripts/api.js"></script>
   <script src="/scripts/list.js"></script>
 </head>
 
 <body>
-  <a href="/">Accueil</a><br>
-  <div x-data='listDocs()'>
-    <nav>
-      <ul class="pagination pagination-lg justify-content-center">
+  <a href='/' class="retour-acc">
+    <em class="bi bi-arrow-left-square"></em>
+    <span>Retour à l'Accueil</span>
+  </a>
+  <div x-data='listDocs()' class="mcontainer">
+    <nav class="d-flex justify-content-between align-items-center mb-3">
+      <input type="text" class="form-control" x-model="texteRecherche" x-on:input="page=0;docs = await getAll()"
+        placeholder="Recherche" style="width:auto !important">
+      <ul class="pagination pagination-lg justify-content-center" style="margin-bottom:0 !important">
+        <li class="page-item" @click="await firstPage()" :class="{ 'disabled': first }">
+          <a class="page-link">
+            <i class="bi bi-chevron-double-left"></i>
+          </a>
+        </li>
         <li class="page-item" @click="await precedent()" :class="{ 'disabled': first }">
-          <a class="page-link" href="#">
+          <a class="page-link">
             <i class="bi bi-caret-left-fill"></i>
           </a>
         </li>
-        <li class="page-item"><a class="page-link" href="#" x-text="page"></a></li>
+        <li class="page-item"><a class="page-link" x-text="(page+1)+'/'+(max+1)"></a></li>
         <li class="page-item" @click="await suivant()" :class="{ 'disabled': last }">
-          <a class="page-link" href="#">
+          <a class="page-link">
             <i class="bi bi-caret-right-fill"></i>
           </a>
         </li>
+        <li class="page-item" @click="await lastPage()" :class="{ 'disabled': last }">
+          <a class="page-link">
+            <i class="bi bi-chevron-double-right"></i>
+          </a>
+        </li>
       </ul>
+      <div class="d-flex flex-column" style="gap:0.4rem">
+        Nombre d'items par page
+        <select required class="form-control" x-model='nbItems' x-on:change="page=0;docs = await getAll()">
+          <option value="5">5</option>
+          <option value="10" selected>10</option>
+          <option value="25">25</option>
+          <option value="100">100</option>
+        </select>
+      </div>
     </nav>
-    <table class="table table-light">
+    <table class="table">
       <thead>
         <tr>
           <th class="th-sm">ID</th>
@@ -57,12 +75,15 @@
             <td x-text='doc.type.libType'></td>
             <td x-text='doc.dateArchivage'></td>
             <td><button type="button" class="btn btn-primary" @click="alert(doc.lien)">Lien</button></td>
-            <td><button type="button" class="btn btn-danger" @click="deleteDoc(doc.idDocument)">Supprimer</button></td>
+            <td><button type="button" class="btn btn-danger"
+                @click="deleteDoc(doc.idDocument, doc.nom)">Supprimer</button></td>
           </tr>
         </template>
       </tbody>
     </table>
-    <div x-text='formMessage'></div>
+    <div class="d-flex justify-content-between">
+      <div x-text='formMessage'></div>
+    </div>
   </div>
 </body>
 

@@ -162,7 +162,7 @@ public class DocumentServiceImp implements DocumentService {
     }
 
     @Override
-    public List<Document> getDocumentsStartingWithByPage(String lib, int numPage, int nbElm) {
+    public Page<Document> getDocumentsStartingWithByPage(String lib, int numPage, int nbElm) {
         Pageable page= PageRequest.of(numPage, nbElm);
         return documentPagingRepository.findAllByNomStartingWith(lib,page);
     }

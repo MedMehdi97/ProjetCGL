@@ -5,6 +5,7 @@ const router = express.Router();
 
 app.use('/scripts', express.static(__dirname + '/scripts'));
 app.use('/assets', express.static(__dirname + '/assets'));
+app.use('/styles', express.static(__dirname + '/styles'));
 
 router.get('/', function (req, res) {
   res.sendFile(path.join(__dirname + '/pages/index.html'));
